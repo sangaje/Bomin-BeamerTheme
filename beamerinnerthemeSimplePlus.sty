@@ -12,11 +12,63 @@
 %--------------------------------------
 
 \pgfdeclareverticalshading[lower.bg,upper.bg]{bmb@transition}{200cm}{%
-color(0pt)=(lower.bg); color(2pt)=(lower.bg); color(4pt)=(lower.bg)}
+    color(0pt)=(lower.bg); color(2pt)=(lower.bg); color(4pt)=(lower.bg)}
 
 \setbeamersize{text margin left=2em,text margin right=2em}
 
-\setbeamertemplate{footline}[frame number]
+\RequirePackage{tikz}
+\usetikzlibrary{
+  arrows.meta,
+  positioning,
+  shapes,
+  fit,
+  calc
+}
+% \setbeamertemplate{footline}[frame number]
+
+% \addtobeamertemplate{footline}{}{% after
+%     % 위에 얇은 구분선
+%     \vspace{-0.25ex}\color{structure.fg!40}\rule{\paperwidth}{0.25pt}\par\vspace{0.1ex}%
+%     % 좌하단: 섹션명(없으면 short title) — 한 줄 정렬, 살짝 작은 텍스트
+%     \makebox[0pt][l]{\hspace{1.2ex}\footnotesize
+%         \textcolor{structure.fg}{%
+%             \insertshorttitle
+%         }%
+%     }%
+% }
+
+% \setbeamercolor{page number in head/foot}{fg=black!60}
+% \setbeamertemplate{page number in head/foot}{%
+%   \hfill
+%   \usebeamerfont{page number in head/foot}%
+%   \usebeamercolor[fg]{page number in head/foot}%
+%   \raisebox{-0.1ex}{\insertframenumber{} / \inserttotalframenumber}%
+%   \hspace{1.2ex}%
+% }
+
+% --- compact one-line footline: left=section label, right=page/total ---
+\defbeamertemplate*{footline}{svcompact}{%
+    \leavevmode%
+    % thin rule (soft color)
+    {\color{structure.fg!40}\rule{\paperwidth}{0.25pt}\par}%
+    \vspace{0.15ex}%
+    \hbox{%
+        % LEFT: current section (or short title)
+        \begin{beamercolorbox}[wd=.74\paperwidth,ht=2.4ex,dp=0.9ex,sep=0pt,left]{section in head/foot}%
+            \hspace{1.2ex}\footnotesize
+            \textcolor{structure.fg}{%
+                \insertshorttitle
+            }%
+        \end{beamercolorbox}%
+        % RIGHT: page / total, with inner padding & toned color
+        \begin{beamercolorbox}[wd=.26\paperwidth,ht=2.4ex,dp=0.9ex,sep=0pt,right]{section in head/foot}%
+            \footnotesize\textcolor{black!60}{\insertsection\enspace • \insertframenumber{} / \inserttotalframenumber}\hspace{1.2ex}%
+        \end{beamercolorbox}%
+    }%
+}
+\setbeamertemplate{footline}[svcompact]
+
+
 \setbeamertemplate{navigation symbols}{}
 
 \setbeamertemplate{blocks}[rounded][shadow=false]
@@ -45,34 +97,34 @@ color(0pt)=(lower.bg); color(2pt)=(lower.bg); color(4pt)=(lower.bg)}
 
 % title page customization
 \setbeamertemplate{title page}{%
-    \vspace{6em}
-    \begingroup
-    \centering
-    % ------------------------
-    \begin{beamercolorbox}[sep=10pt,center]{title}
-        \usebeamerfont{title}\inserttitle\par%
-        \ifx\insertsubtitle\@empty%
-        \else%
+\vspace{6em}
+\begingroup
+\centering
+% ------------------------
+\begin{beamercolorbox}[sep=10pt,center]{title}
+    \usebeamerfont{title}\inserttitle\par%
+    \ifx\insertsubtitle\@empty%
+    \else%
         \vskip0.25em%
         {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
-        \fi%
-    \end{beamercolorbox}%
-    \vskip0.5em\par
-    % ------------------------
-    \begin{beamercolorbox}[sep=8pt,center]{author}
-        \usebeamerfont{author}\insertauthor
-    \end{beamercolorbox}
-    \vskip-1em
-    % ------------------------
-    \begin{beamercolorbox}[sep=8pt,center]{institute}
-        \usebeamerfont{institute}\insertinstitute
-    \end{beamercolorbox}
-    % ------------------------
-    \begin{beamercolorbox}[sep=8pt,center]{date}
-        \usebeamerfont{date}\insertdate
-    \end{beamercolorbox}\vskip0.5em
-    % ------------------------
-    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
-    \endgroup
-    \vfill
+    \fi%
+\end{beamercolorbox}%
+\vskip0.5em\par
+% ------------------------
+\begin{beamercolorbox}[sep=8pt,center]{author}
+    \usebeamerfont{author}\insertauthor
+\end{beamercolorbox}
+\vskip-1em
+% ------------------------
+\begin{beamercolorbox}[sep=8pt,center]{institute}
+    \usebeamerfont{institute}\insertinstitute
+\end{beamercolorbox}
+% ------------------------
+\begin{beamercolorbox}[sep=8pt,center]{date}
+    \usebeamerfont{date}\insertdate
+\end{beamercolorbox}\vskip0.5em
+% ------------------------
+{\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+\endgroup
+\vfill
 }
